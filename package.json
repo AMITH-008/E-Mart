@@ -1,0 +1,16 @@
+{
+  "name": "e-mart",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "E-Commerce website built with MERN stack",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
