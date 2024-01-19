@@ -1,5 +1,7 @@
 import bcrypt from 'bcryptjs'
+import dotenv from 'dotenv';
 
+dotenv.config();
 
 const users = [
     {
