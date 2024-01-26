@@ -54,7 +54,7 @@ const CartScreen = () => {
                                         )}
                                     >
                                         {[...Array(item.countInStock).keys()].map(qty => (
-                                            qty < 11 && (
+                                            qty <= 10 && (
                                             <option key={ qty+1 } value={ qty+1 }>
                                                 { qty +1 }
                                             </option> )
