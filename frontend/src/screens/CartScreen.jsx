@@ -3,7 +3,7 @@ import { UseSelector, useDispatch, useSelector } from 'react-redux';
 import {Row, Col, ListGroup, Image, Form, Button, Card} from 'react-bootstrap';
 import  { FaTrash } from 'react-icons/fa';
 import Message from '../components/Message'
-import { addToCart } from '../slices/cartSlice';
+import { addToCart, removeFromCart } from '../slices/cartSlice';
 import { useState } from 'react';
 
 const CartScreen = () => {
@@ -11,12 +11,24 @@ const CartScreen = () => {
     const dispatch = useDispatch();
 
     const cart = useSelector(state => state.cart);
-    const [deleteItem, setDeleteItem] = useState({});
+    
 
     const {cartItems} = cart;
 
-    const handleDeleteItem = () => {
-        console.log("Handle Delete, e=> ", deleteItem);
+    const removeFromCartHandler = (product) => {
+        console.log("Handle Delete, e=> ", product);
+        dispatch(removeFromCart(product));
+    }
+
+    const addToCartHandler = (product, quantity) => {
+        dispatch(addToCart({
+            ...product,
+            quantity:quantity
+        }))
+    }
+
+    const checkOutHandler = () => {
+        navigate('/login?redirect=/shipping');
     }
 
   return (
@@ -47,10 +59,7 @@ const CartScreen = () => {
                                         as='select'
                                         value={item.quantity}
                                         onChange={(e) => (
-                                            dispatch(addToCart({
-                                                ...item,
-                                                quantity:Number(e.target.value)
-                                            }))
+                                            addToCartHandler(item, Number(e.target.value))
                                         )}
                                     >
                                         {[...Array(item.countInStock).keys()].map(qty => (
@@ -62,9 +71,8 @@ const CartScreen = () => {
                                     </Form.Control>
                                     </Col>
                                     <Col md={2}>
-                                        <Button type="button" variant='light' onClick={() => {
-                                            setDeleteItem(item);
-                                            handleDeleteItem();
+                                        <Button type="button" variant='light' onClick={(e) => {
+                                            removeFromCartHandler(item);
                                         }}>
                                             <FaTrash />
                                         </Button>
@@ -86,7 +94,7 @@ const CartScreen = () => {
                         ${ cartItems.reduce((acc,cur) => acc + cur.quantity * cur.price, 0).toFixed(2)}
                     </ListGroup.Item>
                     <ListGroup.Item>
-                        <Button type="button" color='primary' disabled={cartItems.length === 0}>Proceed to Chekout</Button>
+                        <Button type="button" color='primary' disabled={cartItems.length === 0} onClick={checkOutHandler}>Proceed to Chekout</Button>
                     </ListGroup.Item>
                 </ListGroup>
             </Card>
