@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import productsRouter from './routes/productRoutes.js';
+import userRouter from './routes/userRoutes.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 //configure dotenv for the express project
 dotenv.config();
@@ -19,6 +20,9 @@ app.get('/', (request, response) => {
 
 // Endpoint for getting all products
 app.use('/api/products', productsRouter);
+
+//Endpoint related user data
+app.use('/api/users', userRouter);
 
 app.use(notFound);
 app.use(errorHandler);
