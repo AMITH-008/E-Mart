@@ -4,6 +4,7 @@ import connectDB from './config/db.js';
 import productsRouter from './routes/productRoutes.js';
 import userRouter from './routes/userRoutes.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
+import cookieParser from 'cookie-parser';
 //configure dotenv for the express project
 dotenv.config();
 const port = process.env.PORT || 5050;
@@ -19,6 +20,7 @@ app.use(express.urlencoded({
     extended:true
 }));
 
+app.use(cookieParser());
 
 app.get('/', (request, response) => {
     response.send("API is running");
